@@ -1,0 +1,45 @@
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Description</th>
+        <th scope="col">Created At</th>
+        <th scope="col">Updated At</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (item of itemList; track $index) {
+        <tr>
+          <th scope="row">{{item.id}}</th>
+          <td>{{item.name}}</td>
+          <td>{{item.description}}</td>
+          <td>{{item.createdAt | date}}</td>
+          <td>{{item.updatedAt | date}}</td>
+          <td>
+            <button type="button" (click)="showDetailModal(item, detailModal)" class="btn btn-secondary">
+              <i class="fa-solid fa-eye white"></i>
+            </button>
+            <button type="button" (click)="openEditModal(item)" class="btn btn-warning">
+              <i class="fa-solid fa-pencil white"></i>
+            </button>
+            <button type="button" (click)="deleteProduct(item)" class="btn btn-danger">
+              <i class="fa-solid fa-trash white"></i>
+            </button>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
+<ng-template #detailModal let-modal>
+  <app-modal>
+    <app-products-form
+      (callParentEvent)="onFormEventCalled($event)"
+      [title]="'Update Product'"
+      [toUpdateProduct]="selectedItem"
+    ></app-products-form>
+  </app-modal>
+</ng-template>
